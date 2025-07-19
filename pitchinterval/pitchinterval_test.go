@@ -1,3 +1,4 @@
+// Reference: https://github.com/tonaljs/tonal/tree/main/packages/pitch-interval/test.ts
 package pitchinterval
 
 import (
@@ -8,25 +9,21 @@ import (
 
 func TestTokenizeInterval(t *testing.T) {
 	t.Run("tokenize intervals", func(t *testing.T) {
-		// Test tonal notation (quality after number)
 		result := TokenizeInterval("-2M")
 		assert.Equal(t, [2]string{"-2", "M"}, result)
-		
-		// Test shorthand notation (quality before number)
+
 		result = TokenizeInterval("M-3")
 		assert.Equal(t, [2]string{"-3", "M"}, result)
-		
-		// Test other formats
+
 		result = TokenizeInterval("4d")
 		assert.Equal(t, [2]string{"4", "d"}, result)
-		
+
 		result = TokenizeInterval("P5")
 		assert.Equal(t, [2]string{"5", "P"}, result)
-		
+
 		result = TokenizeInterval("1P")
 		assert.Equal(t, [2]string{"1", "P"}, result)
-		
-		// Test invalid input
+
 		result = TokenizeInterval("invalid")
 		assert.Equal(t, [2]string{"", ""}, result)
 	})
@@ -53,7 +50,6 @@ func TestIntervalFromString(t *testing.T) {
 
 	t.Run("accepts interval as parameter", func(t *testing.T) {
 		original := Parse("5P")
-		// In Go, we test by creating from the same string
 		duplicate := Parse("5P")
 		assert.Equal(t, original, duplicate)
 	})
@@ -98,9 +94,8 @@ func TestIntervalFromString(t *testing.T) {
 			assert.Equal(t, tc.expected, interval.Name, "Input: %s", tc.input)
 		}
 
-		// Test invalid intervals
 		assert.True(t, Parse("not-an-interval").Empty)
-		assert.True(t, Parse("2P").Empty) // 2nd cannot be perfect
+		assert.True(t, Parse("2P").Empty)
 	})
 
 	t.Run("quality", func(t *testing.T) {
@@ -168,47 +163,6 @@ func TestIntervalFromString(t *testing.T) {
 			assert.Equal(t, tc.expected, interval.Simple, "Input: %s", tc.input)
 		}
 	})
-}
-
-func TestIntervalFromProps(t *testing.T) {
-	// t.Run("requires step, alt and dir", func(t *testing.T) {
-	// 	// Test basic intervals
-	// 	interval := FromProps(0, 0, 0, 1) // step=0, alt=0, oct=0, dir=1
-	// 	assert.Equal(t, "1P", interval.Name)
-
-	// 	interval = FromProps(0, -2, 0, 1) // step=0, alt=-2, oct=0, dir=1
-	// 	assert.Equal(t, "1dd", interval.Name)
-
-	// 	interval = FromProps(1, 1, 0, 1) // step=1, alt=1, oct=0, dir=1
-	// 	assert.Equal(t, "2A", interval.Name)
-
-	// 	interval = FromProps(2, -2, 0, 1) // step=2, alt=-2, oct=0, dir=1
-	// 	assert.Equal(t, "3d", interval.Name)
-
-	// 	interval = FromProps(1, 1, 0, -1) // step=1, alt=1, oct=0, dir=-1
-	// 	assert.Equal(t, "-2A", interval.Name)
-
-	// 	// Test invalid step
-	// 	interval = FromProps(1000, 0, 0, 1)
-	// 	assert.True(t, interval.Empty)
-	// })
-
-	// t.Run("accepts octave", func(t *testing.T) {
-	// 	interval := FromProps(0, 0, 0, 1) // step=0, alt=0, oct=0, dir=1
-	// 	assert.Equal(t, "1P", interval.Name)
-
-	// 	interval = FromProps(0, -1, 1, -1) // step=0, alt=-1, oct=1, dir=-1
-	// 	assert.Equal(t, "-8d", interval.Name)
-
-	// 	interval = FromProps(0, 1, 2, -1) // step=0, alt=1, oct=2, dir=-1
-	// 	assert.Equal(t, "-15A", interval.Name)
-
-	// 	interval = FromProps(1, -1, 1, -1) // step=1, alt=-1, oct=1, dir=-1
-	// 	assert.Equal(t, "-9m", interval.Name)
-
-	// 	interval = FromProps(0, 0, 0, 1) // step=0, alt=0, oct=0, dir=1
-	// 	assert.Equal(t, "1P", interval.Name)
-	// })
 }
 
 func TestQToAlt(t *testing.T) {

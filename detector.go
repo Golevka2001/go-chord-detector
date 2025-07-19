@@ -1,3 +1,4 @@
+// Reference: https://github.com/tonaljs/tonal/tree/main/packages/chord-detect/index.ts
 package detector
 
 import (

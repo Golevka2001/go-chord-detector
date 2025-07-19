@@ -1,3 +1,4 @@
+// Reference: https://github.com/tonaljs/tonal/tree/main/packages/chord-type/test.ts
 package chordtype
 
 import (
@@ -48,12 +49,10 @@ func TestGet(t *testing.T) {
 }
 
 func TestAdd(t *testing.T) {
-	// Add simple chord
 	Add([]string{"1P", "5P"}, []string{"q"}, "")
 	quinta := Get("q")
 	assert.Equal(t, "100000010000", quinta.Chroma, "Should have correct chroma")
 
-	// Add with name
 	Add([]string{"1P", "5P"}, []string{"q"}, "quinta")
 	quintaByName := Get("quinta")
 	assert.Equal(t, Get("q"), quintaByName, "Should get same chord by name")
